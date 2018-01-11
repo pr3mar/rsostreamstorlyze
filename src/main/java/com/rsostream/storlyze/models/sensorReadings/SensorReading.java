@@ -1,6 +1,6 @@
-package rsostream.storlyze.models;
+package com.rsostream.storlyze.models.sensorReadings;
 
-import rsostream.storlyze.util.InvalidMessageException;
+import com.rsostream.storlyze.util.InvalidMessageException;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 

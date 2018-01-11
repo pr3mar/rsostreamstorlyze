@@ -1,23 +1,23 @@
-package rsostream.storlyze.util;
+package com.rsostream.storlyze.util;
 
-public class RabbitMQException extends Exception {
+public class InvalidMessageTypeException extends InvalidMessageException {
     private static final long serialVersionUID = 6765369561906450023L;
 
-    public RabbitMQException() {
+    public InvalidMessageTypeException() {
         super();
     }
 
     /**
      * @param message the message for this exception
      */
-    public RabbitMQException(String message) {
+    public InvalidMessageTypeException(String message) {
         super(message);
     }
 
     /**
      * @param cause the root cause
      */
-    public RabbitMQException(Throwable cause) {
+    public InvalidMessageTypeException(Throwable cause) {
         super(cause);
     }
 
@@ -25,7 +25,7 @@ public class RabbitMQException extends Exception {
      * @param message the message for this exception
      * @param cause   the root cause
      */
-    public RabbitMQException(String message, Throwable cause) {
+    public InvalidMessageTypeException(String message, Throwable cause) {
         super(message, cause);
     }
 }

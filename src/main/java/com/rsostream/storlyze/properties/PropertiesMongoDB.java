@@ -1,4 +1,4 @@
-package rsostream.storlyze.properties;
+package com.rsostream.storlyze.properties;
 
 import com.kumuluz.ee.configuration.cdi.ConfigBundle;
 import com.kumuluz.ee.configuration.cdi.ConfigValue;

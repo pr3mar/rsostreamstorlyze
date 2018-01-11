@@ -1,10 +1,10 @@
-package rsostream.storlyze.services;
+package com.rsostream.storlyze.services;
 
 import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import com.rabbitmq.client.*;
-import rsostream.storlyze.properties.PropertiesRabbitMQ;
+import com.rsostream.storlyze.properties.PropertiesRabbitMQ;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
@@ -19,8 +19,12 @@ import java.util.concurrent.TimeoutException;
 public class ServiceRabbitMQSubscribe {
 
     private static final Logger log = LogManager.getLogger(ServiceRabbitMQSubscribe.class.getName());
+
     @Inject
     private PropertiesRabbitMQ propertiesRabbitMQ;
+
+    @Inject
+    private ServiceHandleMessages serviceHandleMessages;
 
     private Connection connection;
     private Channel channel;
@@ -44,6 +48,7 @@ public class ServiceRabbitMQSubscribe {
                 String message = new String(body, "UTF-8");
                 log.info("message received:" + message);
                 // logic goes here
+                serviceHandleMessages.handleData(message);
             }
         };
 

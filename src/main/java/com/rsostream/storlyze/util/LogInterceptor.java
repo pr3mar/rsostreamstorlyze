@@ -1,4 +1,4 @@
-package rsostream.storlyze.util;
+package com.rsostream.storlyze.util;
 
 import com.kumuluz.ee.common.config.EeConfig;
 import com.kumuluz.ee.common.runtime.EeRuntime;

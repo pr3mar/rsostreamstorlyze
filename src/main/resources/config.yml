@@ -52,8 +52,8 @@ kumuluzee:
         threshold: 100000000
       http-health-check:
         - connection-url: https://google.com # Please change this into something more meaningful.
-      mongo-health-check:
-        connection-url: mongodb://rso:123456@ds247317.mlab.com:47317/rso-db
+#      mongo-health-check:
+#        connection-url: mongodb://rso:123456@ds247317.mlab.com:47317/rso-db
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                   <Configuration name="rso-tcp">

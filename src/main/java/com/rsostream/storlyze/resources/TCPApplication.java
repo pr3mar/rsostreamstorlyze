@@ -1,4 +1,4 @@
-package rsostream.storlyze.resources;
+package com.rsostream.storlyze.resources;
 
 
 import com.kumuluz.ee.discovery.annotations.RegisterService;
