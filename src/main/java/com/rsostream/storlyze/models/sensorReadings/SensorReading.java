@@ -1,29 +1,43 @@
 package com.rsostream.storlyze.models.sensorReadings;
 
 import com.rsostream.storlyze.util.InvalidMessageException;
+
 import javax.xml.bind.annotation.XmlRootElement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 
 @XmlRootElement
 public class SensorReading {
     public final EnumType TYPE;
     private Date timeObtained;
-    private String IMEI;
+    private String imei;
     private int signalQuality;
     private static int numberOfAttributes = 3;
 
-    SensorReading(Date timeObtained, String IMEI, int signalQuality) {
+    public SensorReading(){
+        this.TYPE = EnumType.SUPER;
+    }
+
+    SensorReading(Date timeObtained, String imei, int signalQuality) {
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+        df.setTimeZone(tz);
         TYPE = EnumType.SUPER;
         this.timeObtained = timeObtained;
-        this.IMEI = IMEI;
+        this.imei = imei;
         this.signalQuality = signalQuality;
     }
 
-    SensorReading(EnumType type, Date timeObtained, String IMEI, int signalQuality) {
+    SensorReading(EnumType type, Date timeObtained, String imei, int signalQuality) {
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+        df.setTimeZone(tz);
         TYPE = type;
         this.timeObtained = timeObtained;
-        this.IMEI = IMEI;
+        this.imei = imei;
         this.signalQuality = signalQuality;
     }
 
@@ -39,12 +53,12 @@ public class SensorReading {
         return numberOfAttributes;
     }
 
-    public String getIMEI() {
-        return IMEI;
+    public String getImei() {
+        return imei;
     }
 
-    public void setIMEI(String IMEI) {
-        this.IMEI = IMEI;
+    public void setImei(String imei) {
+        this.imei = imei;
     }
 
     public int getSignalQuality() {

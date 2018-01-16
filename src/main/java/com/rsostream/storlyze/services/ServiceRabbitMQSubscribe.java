@@ -6,6 +6,7 @@ import com.kumuluz.ee.logs.cdi.Log;
 import com.rabbitmq.client.*;
 import com.rsostream.storlyze.properties.PropertiesRabbitMQ;
 import com.rsostream.storlyze.util.InvalidMessageException;
+import com.rsostream.storlyze.util.ResourceNotAvailableException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
@@ -52,8 +53,9 @@ public class ServiceRabbitMQSubscribe {
                 // logic goes here
                 try {
                     serviceHandleMessages.handleData(message);
-                } catch (InvalidMessageException e) {
+                } catch (InvalidMessageException|ResourceNotAvailableException e) {
                     log.error(e.getMessage());
+                    e.printStackTrace();
                 }
             }
         };

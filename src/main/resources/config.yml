@@ -35,6 +35,24 @@ kumuluzee:
         url-pattern: /v1/tcp/*
       - name: premetheus-endpoint
         url-pattern: /prometheus/*
+  fault-tolerance:
+    config:
+      watch-enabled: true
+      watch-properties: timeout.value,circuit-breaker.failure-ratio
+    circuit-breaker:
+      delay: 3s
+    crud:
+      bulkhead:
+        value: 5
+      timeout:
+        value: 2500ms
+      circuit-breaker:
+        request-volume-threshold: 10
+        failure-ratio: 0.3
+        metrics:
+          rolling-window:
+            size: 8s
+            buckets: 4
   health:
     servlet:
       mapping: /health
@@ -90,4 +108,10 @@ mongo-db:
   device-collection: Devices
   settings-collection: DeviceSettings
   sensor-data-collection: SensorData
+crud:
+  service-name: rsostream-crud
+  version: 1.0.0
+  environment: dev
+  reading-base-uri: v1/reading/
+  device-base-uri: v1/device/
 # ETCD kubernetes deployment -> github rso-customers @ jmezna

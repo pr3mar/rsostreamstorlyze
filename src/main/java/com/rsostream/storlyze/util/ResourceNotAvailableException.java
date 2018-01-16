@@ -1,24 +1,24 @@
 package com.rsostream.storlyze.util;
 
-public class RabbitMQException extends Exception {
+public class ResourceNotAvailableException extends Exception {
 
-    private static final long serialVersionUID = -3477642689006411678L;
+    private static final long serialVersionUID = -2176454997137524534L;
 
-    public RabbitMQException() {
+    public ResourceNotAvailableException() {
         super();
     }
 
     /**
      * @param message the message for this exception
      */
-    public RabbitMQException(String message) {
+    public ResourceNotAvailableException(String message) {
         super(message);
     }
 
     /**
      * @param cause the root cause
      */
-    public RabbitMQException(Throwable cause) {
+    public ResourceNotAvailableException(Throwable cause) {
         super(cause);
     }
 
@@ -26,7 +26,7 @@ public class RabbitMQException extends Exception {
      * @param message the message for this exception
      * @param cause   the root cause
      */
-    public RabbitMQException(String message, Throwable cause) {
+    public ResourceNotAvailableException(String message, Throwable cause) {
         super(message, cause);
     }
 }

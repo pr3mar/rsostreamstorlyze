@@ -1,7 +1,8 @@
 package com.rsostream.storlyze.util;
 
 public class InvalidMessageTypeException extends InvalidMessageException {
-    private static final long serialVersionUID = 6765369561906450023L;
+
+    private static final long serialVersionUID = -7010144121954291699L;
 
     public InvalidMessageTypeException() {
         super();
