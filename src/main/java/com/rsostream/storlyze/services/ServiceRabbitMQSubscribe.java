@@ -5,6 +5,7 @@ import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
 import com.rabbitmq.client.*;
 import com.rsostream.storlyze.properties.PropertiesRabbitMQ;
+import com.rsostream.storlyze.util.InvalidMessageException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Destroyed;
@@ -37,8 +38,9 @@ public class ServiceRabbitMQSubscribe {
         log.info("Host: "+ propertiesRabbitMQ.getHost());
         factory.setHost(propertiesRabbitMQ.getHost());
         // not required for the basic setup!
-//        factory.setHost(propertiesRabbitMQ.getUsername());
-//        factory.setHost(propertiesRabbitMQ.getPassword());
+        factory.setUsername(propertiesRabbitMQ.getUsername());
+        factory.setPassword(propertiesRabbitMQ.getPassword());
+        factory.setVirtualHost(propertiesRabbitMQ.getUsername());
 
         Consumer consumer = new DefaultConsumer(channel) {
             @Override
@@ -48,7 +50,11 @@ public class ServiceRabbitMQSubscribe {
                 String message = new String(body, "UTF-8");
                 log.info("message received:" + message);
                 // logic goes here
-                serviceHandleMessages.handleData(message);
+                try {
+                    serviceHandleMessages.handleData(message);
+                } catch (InvalidMessageException e) {
+                    log.error(e.getMessage());
+                }
             }
         };
 

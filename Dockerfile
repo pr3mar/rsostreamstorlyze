@@ -4,7 +4,7 @@ RUN mkdir /app
 
 WORKDIR /app
 
-ADD ./target/rsostream-tcp-1.0-SNAPSHOT.jar /app
+ADD ./target/rsostream-storlyze-1.0-SNAPSHOT.jar /app
 
 EXPOSE 8080
 

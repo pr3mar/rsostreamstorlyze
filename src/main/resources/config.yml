@@ -50,10 +50,10 @@ kumuluzee:
     checks:
       disk-space-health-check:
         threshold: 100000000
-      http-health-check:
-        - connection-url: https://google.com # Please change this into something more meaningful.
+#      http-health-check:
+#        - connection-url: http://localhost:8080/v1/tcp # Please change this into something more meaningful.
 #      mongo-health-check:
-#        connection-url: mongodb://rso:123456@ds247317.mlab.com:47317/rso-db
+#        connection-url: mongodb://rso:123456@ds247317.mlab.com:47317/rso-db?serverSelectionTimeoutMS=2000
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                   <Configuration name="rso-tcp">
@@ -75,9 +75,9 @@ kumuluzee:
                       </Loggers>
                   </Configuration>'
 rabbit-mq:
-  host: localhost
-  username: guest
-  password: guest
+  host: gopher.rmq.cloudamqp.com
+  username: pmhwkvgq
+  password: 0wV5qBOCns70ZMQBL9qZ6MvfjgQwtRMn
   routing-key: tcp-q
   exchange-name: ''
 mongo-db:

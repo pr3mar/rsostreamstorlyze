@@ -1,17 +1,17 @@
 package com.rsostream.storlyze.services;
 
-import com.google.gson.Gson;
 import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
 import com.mongodb.*;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import org.bson.Document;
-import org.bson.codecs.configuration.CodecProvider;
+import com.rsostream.storlyze.models.DeviceSettings;
+import com.rsostream.storlyze.models.sensorReadings.SensorReading;
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.PojoCodecProvider;
-import com.rsostream.storlyze.models.device.Device;
+import com.rsostream.storlyze.models.Device;
 import com.rsostream.storlyze.properties.PropertiesMongoDB;
+import org.bson.types.ObjectId;
 
 import static com.mongodb.client.model.Filters.eq;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
@@ -28,7 +28,6 @@ public class ServiceMongoDB {
 
     private static final Logger log = LogManager.getLogger(ServiceMongoDB.class.getName());
 
-
     @Inject
     PropertiesMongoDB propertiesMongoDB;
 
@@ -36,8 +35,8 @@ public class ServiceMongoDB {
     private MongoDatabase db;
 //    private MongoCollection<Document> deviceCollection;
     private MongoCollection<Device> deviceCollection;
-    private MongoCollection<Document> settingsCollection;
-    private MongoCollection<Document> sensorDataCollection;
+    private MongoCollection<DeviceSettings> settingsCollection;
+    private MongoCollection<SensorReading> sensorDataCollection;
 
     private void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
         CodecRegistry pojoCodecRegistry = fromRegistries(MongoClient.getDefaultCodecRegistry(),
@@ -49,31 +48,17 @@ public class ServiceMongoDB {
         db = mongoClient.getDatabase(propertiesMongoDB.getDb());
         db = db.withCodecRegistry(pojoCodecRegistry);
         deviceCollection = db.getCollection(propertiesMongoDB.getDeviceCollection(), Device.class);
-//        deviceCollection = db.getCollection(propertiesMongoDB.getDeviceCollection());
-        settingsCollection = db.getCollection(propertiesMongoDB.getSettingsCollection());
-        sensorDataCollection = db.getCollection(propertiesMongoDB.getSensorDataCollection());
+        settingsCollection = db.getCollection(propertiesMongoDB.getSettingsCollection(), DeviceSettings.class);
+        sensorDataCollection = db.getCollection(propertiesMongoDB.getSensorDataCollection(), SensorReading.class);
     }
 
     private void stop(@Observes @Destroyed(ApplicationScoped.class) Object destroyed) {
         mongoClient.close();
     }
 
-    public Device find() {
+    public DeviceSettings findSettingsByDeviceId(ObjectId deviceId) {
         try {
-            deviceCollection.insertOne(new Device("newer device!"));
-            /*Block<Device> printBlock = new Block<Device>() {
-                @Override
-                public void apply(Device device) {
-                    log.info(device.toString());
-                }
-            };
-            deviceCollection.find().forEach(printBlock);*/
-//            Document doc = deviceCollection.find().first();
-            Device doc = deviceCollection.find().first();
-            // a very bad hack.
-            /*Gson deserializer = new Gson();
-            Device doc = deserializer.fromJson(deviceCollection.find().first().toJson(), Device.class);*/
-            log.info(":D :D :D FOUND:" + doc);
+            DeviceSettings doc = settingsCollection.find(eq("deviceId", deviceId)).first();
             return doc;
         } catch (NullPointerException e) {
             log.info("Not found anything :(");
