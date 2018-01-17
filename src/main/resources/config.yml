@@ -7,16 +7,18 @@ kumuluzee:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
     etcd:
-      hosts: http://localhost:2379
+#      hosts: http://localhost:2379
+      hosts: http://etcd:2379
   server:
-#    base-url: http://169.51.13.160 # zunanji URL
-    base-url: http://localhost # zunanji URL
+    base-url: http://169.51.13.160 # zunanji URL
+#    base-url: http://localhost # local URL
     http:
-      port: 8085
+#      port: 8085
+      port: 8080
   discovery:
     etcd:
-#      hosts: http://etcd:2379
-      hosts: http://localhost:2379
+      hosts: http://etcd:2379
+#      hosts: http://localhost:2379
     ttl: 20
     ping-interval: 15
   cors-filter:
@@ -32,27 +34,9 @@ kumuluzee:
 #      level: TRACE
     web-instrumentation:
       - name: metrics-endpoint
-        url-pattern: /v1/tcp/*
+        url-pattern: /v1/storlyze/*
       - name: premetheus-endpoint
         url-pattern: /prometheus/*
-  fault-tolerance:
-    config:
-      watch-enabled: true
-      watch-properties: timeout.value,circuit-breaker.failure-ratio
-    circuit-breaker:
-      delay: 3s
-    crud:
-      bulkhead:
-        value: 5
-      timeout:
-        value: 2500ms
-      circuit-breaker:
-        request-volume-threshold: 10
-        failure-ratio: 0.3
-        metrics:
-          rolling-window:
-            size: 8s
-            buckets: 4
   health:
     servlet:
       mapping: /health

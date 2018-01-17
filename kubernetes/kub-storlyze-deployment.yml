@@ -10,7 +10,7 @@ spec:
         app: rso-iot-storlyze
     spec:
       containers:
-      - image: rsostream/rsostreamstorlyze:0.02
+      - image: rsostream/rsostreamstorlyze:0.01
         name: rso-dummy-consumer
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
